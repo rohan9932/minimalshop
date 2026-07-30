@@ -1,0 +1,6 @@
+{
+  "name": "MinimalShop",
+  "description": "A sleek, minimalist e-commerce web application featuring curated product galleries, interactive cart drawer, and category filtering.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
