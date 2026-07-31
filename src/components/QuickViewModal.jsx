@@ -3,6 +3,7 @@ export default function QuickViewModal({ product, onClose, onAddToCart }) {
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4">
+      {/* to make the background blurry */}
       <div
         onClick={onClose}
         className="fixed inset-0 bg-black/40 backdrop-blur-sm"
@@ -29,8 +30,12 @@ export default function QuickViewModal({ product, onClose, onAddToCart }) {
             <span className="text-xs font-semibold uppercase tracking-widest text-[#777587] mb-1 block">
               {product.categoryLabel}
             </span>
-            <h2 className="text-xl font-bold text-[#191c1d] mb-2">{product.name}</h2>
-            <p className="text-lg font-medium text-[#3525cd] mb-4">${product.price}</p>
+            <h2 className="text-xl font-bold text-[#191c1d] mb-2">
+              {product.name}
+            </h2>
+            <p className="text-lg font-medium text-[#3525cd] mb-4">
+              ${product.price}
+            </p>
             <p className="text-xs text-[#464555] leading-relaxed mb-6">
               {product.description}
             </p>

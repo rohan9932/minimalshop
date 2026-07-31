@@ -7,7 +7,7 @@ export default function CartDrawer({
   subtotal,
   estimatedTax,
   grandTotal,
-  onProceedToCheckout
+  onProceedToCheckout,
 }) {
   if (!isOpen) return null;
 
@@ -39,24 +39,37 @@ export default function CartDrawer({
         <div className="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
           {cart.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-[#777587] space-y-3 opacity-70 py-12">
-              <span className="material-symbols-outlined text-5xl">shopping_bag</span>
+              <span className="material-symbols-outlined text-5xl">
+                shopping_bag
+              </span>
               <p className="text-sm font-medium">Your cart is empty</p>
             </div>
           ) : (
             cart.map((item, index) => (
-              <div key={item.id || index} className="flex gap-4 items-center border-b border-[#f3f4f5] pb-4">
+              <div
+                key={item.id || index}
+                className="flex gap-4 items-center border-b border-[#f3f4f5] pb-4"
+              >
                 <div className="w-20 h-20 bg-[#f3f4f5] rounded overflow-hidden flex-shrink-0 border border-[#c7c4d8]/40">
-                  <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
-                    <h3 className="text-sm font-bold text-[#191c1d] leading-tight">{item.name}</h3>
+                    <h3 className="text-sm font-bold text-[#191c1d] leading-tight">
+                      {item.name}
+                    </h3>
                     <button
                       onClick={() => onRemoveFromCart(index)}
                       className="text-[#777587] hover:text-red-600 transition-colors"
                       title="Remove item"
                     >
-                      <span className="material-symbols-outlined text-lg">delete</span>
+                      <span className="material-symbols-outlined text-lg">
+                        delete
+                      </span>
                     </button>
                   </div>
                   <p className="text-xs text-[#777587] mb-2">{item.variant}</p>
@@ -67,14 +80,20 @@ export default function CartDrawer({
                         onClick={() => onUpdateQuantity(index, -1)}
                         className="text-[#777587] hover:text-[#3525cd] p-1"
                       >
-                        <span className="material-symbols-outlined text-xs">remove</span>
+                        <span className="material-symbols-outlined text-xs">
+                          remove
+                        </span>
                       </button>
-                      <span className="px-3 text-xs font-semibold text-[#191c1d]">{item.quantity}</span>
+                      <span className="px-3 text-xs font-semibold text-[#191c1d]">
+                        {item.quantity}
+                      </span>
                       <button
                         onClick={() => onUpdateQuantity(index, 1)}
                         className="text-[#777587] hover:text-[#3525cd] p-1"
                       >
-                        <span className="material-symbols-outlined text-xs">add</span>
+                        <span className="material-symbols-outlined text-xs">
+                          add
+                        </span>
                       </button>
                     </div>
                     <span className="text-sm font-medium text-[#191c1d]">
@@ -114,8 +133,12 @@ export default function CartDrawer({
 
             <div className="mt-4 flex flex-col items-center gap-3">
               <div className="flex gap-4 text-[#777587]">
-                <span className="material-symbols-outlined text-lg">receipt_long</span>
-                <span className="material-symbols-outlined text-lg">favorite</span>
+                <span className="material-symbols-outlined text-lg">
+                  receipt_long
+                </span>
+                <span className="material-symbols-outlined text-lg">
+                  favorite
+                </span>
               </div>
               <button
                 onClick={onClose}
