@@ -13,10 +13,6 @@ import Footer from './components/Footer.jsx';
 import ShopPage from './pages/ShopPage.jsx';
 
 export default function App() {
-  // Navigation & View States
-  const [activeTab, setActiveTab] = useState('Shop'); // 'Shop', 'Categories', 'About'
-  const [searchQuery, setSearchQuery] = useState('');
-
   // Cart State
   const [cart, setCart] = useState(INITIAL_CART_ITEMS);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -76,10 +72,10 @@ export default function App() {
     setIsCartOpen(true);
   };
 
-  const updateQuantity = (index, delta) => {
+  const updateQuantity = (index) => {
     setCart((prevCart) => {
       const updated = [...prevCart];
-      const newQty = updated[index].quantity + delta;
+      const newQty = updated[index].quantity + 1;
       if (newQty <= 0) {
         updated.splice(index, 1);
       } else {
@@ -125,35 +121,17 @@ export default function App() {
 
       {/* Top Navigation Bar */}
       <Header
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
         totalCartCount={totalCartCount}
         onOpenCart={() => setIsCartOpen(true)}
-        onResetFilters={handleResetFilters}
-        onShowToast={showToast}
       />
 
       {/* Main Page View Router */}
       <main className="flex-1 max-w-[1280px] w-full mx-auto px-6 md:px-10 py-10 md:py-14">
-        {activeTab === 'Shop' && (
-          <ShopPage
-            filteredProducts={PRODUCTS}
-            onAddToCart={handleAddToCart}
-            onQuickView={(prod) => setQuickViewProduct(prod)}
-          />
-        )}
-
-        {activeTab === 'Categories' && (
-          <CategoriesPage
-            categories={categories}
-            onSelectCategory={(catId) => {
-              setSelectedCategory(catId);
-              setActiveTab('Shop');
-            }}
-          />
-        )}
-
-        {activeTab === 'About' && <AboutPage />}
+        <ShopPage
+          filteredProducts={PRODUCTS}
+          onAddToCart={handleAddToCart}
+          onQuickView={(prod) => setQuickViewProduct(prod)}
+        />
       </main>
 
       {/* Cart Drawer */}
