@@ -47,41 +47,52 @@ export default function App() {
   const estimatedTax = subtotal > 0 ? 42.0 : 0;
   const grandTotal = subtotal + estimatedTax;
 
-  const handleAddToCart = (product) => {
+  const handleAddToCart = (product, delta = 1) => {
     setCart((prevCart) => {
-      const existingIndex = prevCart.findIndex((item) => item.name === product.name);
-      if (existingIndex > -1) {
-        const updated = [...prevCart];
-        updated[existingIndex].quantity += 1;
-        return updated;
-      } else {
+      const existingIndex = prevCart.findIndex(
+        (item) => item.name === product.name || (product.id && item.id === product.id)
+      );
+      if (existingIndex > -1) { // updating item quantity
+        const currentQty = prevCart[existingIndex].quantity;
+        const newQty = currentQty + delta;
+        if (newQty <= 0) {
+          return prevCart.filter((_, i) => i !== existingIndex);
+        }
+        return prevCart.map((item, i) =>
+          i === existingIndex ? { ...item, quantity: newQty } : item
+        );
+      } else { // adding new item
+        if (delta <= 0) return prevCart;
         return [
           ...prevCart,
           {
-            id: 'c_' + Date.now(),
+            id: product.id || 'c_' + Date.now(),
             name: product.name,
-            variant: product.categoryLabel,
+            variant: product.variant || product.categoryLabel || 'Standard',
             price: product.price,
-            quantity: 1,
+            quantity: delta,
             image: product.image
           }
         ];
       }
     });
-    showToast(`Added "${product.name}" to cart`);
-    setIsCartOpen(true);
+    if (delta > 0) {
+      showToast(`Added "${product.name}" to cart`);
+      setIsCartOpen(true);
+    }
   };
 
-  const updateQuantity = (index) => {
+  const updateQuantity = (index, delta = 1) => {
     setCart((prevCart) => {
-      const updated = [...prevCart];
-      const newQty = updated[index].quantity + 1;
+      if (index < 0 || index >= prevCart.length) return prevCart;
+      const currentQty = prevCart[index].quantity;
+      const newQty = currentQty + delta;
       if (newQty <= 0) {
-        updated.splice(index, 1);
-      } else {
-        updated[index].quantity = newQty;
+        return prevCart.filter((_, i) => i !== index);
       }
-      return updated;
+      return prevCart.map((item, i) =>
+        i === index ? { ...item, quantity: newQty } : item
+      );
     });
   };
 
@@ -98,22 +109,7 @@ export default function App() {
       setCart([]);
     }, 1500);
   };
-
-  const handleResetFilters = () => {
-    setSelectedCategory('ALL');
-    setSearchQuery('');
-  };
-
-  const categories = [
-    { id: 'ALL', label: 'All Products' },
-    { id: 'LIVING', label: 'Living' },
-    { id: 'APPAREL', label: 'Apparel' },
-    { id: 'FOOTWEAR', label: 'Footwear' },
-    { id: 'OFFICE', label: 'Office' },
-    { id: 'ACCESSORIES', label: 'Accessories' },
-    { id: 'KITCHEN', label: 'Kitchen' }
-  ];
-
+  
   return (
     <div className="min-h-screen flex flex-col bg-[#f8f9fa] text-[#191c1d] selection:bg-[#3525cd] selection:text-white">
       {/* Toast Notification */}
@@ -128,7 +124,7 @@ export default function App() {
       {/* Main Page View Router */}
       <main className="flex-1 max-w-[1280px] w-full mx-auto px-6 md:px-10 py-10 md:py-14">
         <ShopPage
-          filteredProducts={PRODUCTS}
+          products={PRODUCTS}
           onAddToCart={handleAddToCart}
           onQuickView={(prod) => setQuickViewProduct(prod)}
         />

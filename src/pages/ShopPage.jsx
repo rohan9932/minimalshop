@@ -1,7 +1,7 @@
 import ProductCard from '../components/ProductCard.jsx';
 
 export default function ShopPage({
-  filteredProducts,
+  products,
   onAddToCart,
   onQuickView
 }) {
@@ -19,7 +19,7 @@ export default function ShopPage({
 
       {/* Product Gallery Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12">
-        {filteredProducts.map((product) => (
+        {products.map((product) => (
           <ProductCard
             key={product.id}
             product={product}

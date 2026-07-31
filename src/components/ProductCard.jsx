@@ -2,7 +2,7 @@ export default function ProductCard({ product, onAddToCart, onQuickView }) {
   return (
     <div className="group product-card-hover flex flex-col">
       {/* Image Container */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-[#f3f4f5] rounded border border-transparent hover:border-[#c7c4d8] transition-all duration-300">
+      <div className="relative aspect-[4/5] overflow-hidden bg-[#f3f4f5] rounded transition-all duration-300">
         <img
           src={product.image}
           alt={product.name}
@@ -13,7 +13,7 @@ export default function ProductCard({ product, onAddToCart, onQuickView }) {
         {/* Add to Cart Overlay Button */}
         <button
           onClick={() => onAddToCart(product)}
-          className="add-to-cart-btn absolute bottom-4 left-4 right-4 bg-white text-[#191c1d] py-3 text-xs font-bold shadow-lg opacity-0 translate-y-4 transition-all duration-300 hover:bg-[#111827] hover:text-white rounded"
+          className="add-to-cart-btn absolute bottom-10 left-4 right-4 bg-white text-[#191c1d] py-3 text-xs font-bold shadow-lg opacity-0 translate-y-4 transition-all duration-300 hover:bg-[#111827] hover:text-white rounded"
         >
           Add to Cart
         </button>
